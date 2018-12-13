@@ -12,4 +12,3 @@ phases:
 artifacts:
   files:
   - TraductorComponentes/target/my-app-1.0-SNAPSHOT.jar
-  - target/my-app-1.0-SNAPSHOT.jar
