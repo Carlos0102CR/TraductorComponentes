@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Dic-tio-nary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark text-white">
+    <a class="navbar-brand">Dic-tio-nary</a>
+    <form class="form-inline">
+        <a class="mr-3 text-white" href="/"><strong>TRADUCTOR</strong></a>
+        <a class="btn btn-outline-light my-2 my-sm-0 mr-3" href="/users/">LOGIN</a>
+        <a class="btn btn-light my-2 my-sm-0" href="/users">REGISTRAR</a>
+    </form>
+</nav>
+<div class="container">
+    <h1 class="d-flex justify-content-center mb-5 mt-5">Traduce lo que quieras</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <select class="form-control border-0" id="selectTextoOrigen">
+                    <option selected="" disabled>Traducir de Cualquier Idioma</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control bg-dark text-white p-4" placeholder="Type Anything..." id="textoOrigen" rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <select class="form-control border-0" id="selectTextoDestino">
+                    <option selected disabled>Traducir a...</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+                <div class="form-group">
+                    <textarea class="form-control border-4 border-dark p-4" placeholder="Escribe lo que sea..." id="textoDestino" rows="6"></textarea>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
