@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
-@RequestMapping("/users")
+@RequestMapping("/users/")
 @Controller
 public class UserController {
 
@@ -28,13 +28,13 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
-    public String userPerfil(@PathVariable Long id,Model model) {
-        Optional<User> user = repo.findById(id);
+    @GetMapping("/login")
+    public String userLogIn(Model model) {
+        User user = new User();
 
         model.addAttribute("user",user);
 
-        return "userPerfil";
+        return "userLogIn";
     }
 
     @PostMapping
