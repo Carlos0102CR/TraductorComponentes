@@ -19,7 +19,7 @@ public class DocumentController {
     @GetMapping
     public String documentForm(Model model) {
 
-        return "documentUploadForm";
+        return "documentUpload";
     }
 
     @PostMapping("/{id}")
