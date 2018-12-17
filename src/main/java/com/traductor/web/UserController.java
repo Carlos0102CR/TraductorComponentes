@@ -18,24 +18,37 @@ public class UserController {
     @Autowired
     UserRepository repo;
 
-    @GetMapping
-    public String userForm(Model model) {
-        User user = new User();
+    @RequestMapping(value = "/user")
+	public String saveUser(Model model) {
+		model.addAttribute("user", new User());
+		return "user";
+	}
 
-        model.addAttribute("user",user);
+	@RequestMapping(value = "user", method = RequestMethod.POST)
+	public String registerUser(@ModelAttribute("user") User user) {
+		repo.save(user);
+		return "user";
+	}
+	
+	@RequestMapping(value = "/login")
+	public String saveUserLogin(Model model) {
+		model.addAttribute("login", new User());
+		return "login";
+	}
+    
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String userLogin(Model model, @ModelAttribute("login") User user) {
 
-        return "userRegistration";
-    }
+		User us = repo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 
+		if (us != null) {
 
-    @GetMapping("/login")
-    public String userLogIn(Model model) {
-        User user = new User();
+			return "documentUpload";
+		}
 
-        model.addAttribute("user",user);
+		return "login";
 
-        return "userLogIn";
-    }
+	}
 
     @PostMapping
     public String userSubmit(@ModelAttribute User user) {
