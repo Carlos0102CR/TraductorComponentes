@@ -28,10 +28,6 @@ public class Document {
     @Column(name="crated_date")
     private String created;
 
-
-    @Transient
-    private SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-
     @Transient
     private MultipartFile pdf;
 
