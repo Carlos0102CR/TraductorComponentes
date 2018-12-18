@@ -7,7 +7,7 @@ public enum Language {
     Czech("cs"),
     Danish("da"),
     Dutch("nl"),
-    ENGLISH("en"),
+    English("en"),
     Finnish("fi"),
     French("fr"),
     German("de"),

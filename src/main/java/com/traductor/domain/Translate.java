@@ -2,6 +2,8 @@ package com.traductor.domain;
 
 import com.amazonaws.services.translate.model.TranslateTextRequest;
 
+import javax.persistence.Entity;
+
 public class Translate {
 
     private String text;

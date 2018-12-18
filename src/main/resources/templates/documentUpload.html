@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>Dic-tio-nary</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -17,16 +16,14 @@
     </form>
 </nav>
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="box__input">
-                    <input class="box__file" type="file" name="files[]" id="file"
-                           data-multiple-caption="{count} files selected" multiple/>
-                    <label for="file"><strong>Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-                    <button class="box__button" type="submit">Upload</button>
+    <div class="row md-12">
+        <div class="col-md-12">
+            <form method="post" action="#" id="#">
+                <div class="form-group files">
+                   <h2>Traduzca un documento</h2>
+                    <input type="file" class="form-control" multiple="">
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
