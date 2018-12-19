@@ -22,9 +22,8 @@ public class TranslateController {
         return "index";
     }
 
-    @PostMapping("/translate")
-    @ResponseBody
-    public String submitTranslation(@RequestBody Translate translate,Model model) {
+    @PostMapping
+    public String submitTranslation(@ModelAttribute("translate") Translate translate,Model model) {
         model.addAttribute("translate",AWSClient.translate(translate));
         return "index";
     }
