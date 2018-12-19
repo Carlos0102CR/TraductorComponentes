@@ -23,7 +23,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <select th:field="*{sourceLanguage}" class="form-control border-0" id="selectTextoOrigen">
-                        <option selected="" value="" disabled>Traducir de Cualquier Idioma</option>
+                        <option selected="no" value="" disabled>Traducir de Cualquier Idioma</option>
                         <option value="Auto"> Auto</option>
                         <option value="Arabic"> Arabic</option>
                         <option value="Chinese"> Chinese</option>
@@ -56,7 +56,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <select th:field="*{targetLanguage}" class="form-control border-0" id="selectTextoDestino" onchange="submit">
-                        <option selected value="" disabled>Traducir a...</option>
+                        <option selected value="no" disabled>Traducir a...</option>
                         <option value="Arabic"> Arabic</option>
                         <option value="Chinese"> Chinese</option>
                         <option value="Czech"> Czech</option>
@@ -80,12 +80,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                <textarea th:value="*{translatedText}" class="form-control border-4 border-dark p-4" readonly placeholder="Escribe lo que sea..."
+                <textarea th:text="${translate.translatedText}" class="form-control border-4 border-dark p-4" readonly placeholder="Escribe lo que sea..."
                           id="textoDestino" rows="6"></textarea>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-dark">Traducir</button>
+        <button type="submit" class="btn btn-dark">Traducir</button>
     </form>
 </div>
 </body>
