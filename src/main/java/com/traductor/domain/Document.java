@@ -1,10 +1,7 @@
 package com.traductor.domain;
 
 
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "documents")
@@ -14,7 +11,7 @@ public class Document {
     private Long id;
 
     @Column(name="id_user")
-    private String User;
+    private Long idUser;
 
     @Column(name="id_name")
     private String idName;
@@ -27,15 +24,11 @@ public class Document {
 
     @Column(name="crated_date")
     private String created;
-
-    @Transient
-    private MultipartFile pdf;
-
     public Document() {
     }
 
-    public Document(String user, String idName, String title, String url, String created) {
-        User = user;
+    public Document(Long idUser, String idName, String title, String url, String created) {
+        this.idUser = idUser;
         this.idName = idName;
         this.title = title;
         this.url = url;
@@ -50,12 +43,12 @@ public class Document {
         this.id = id;
     }
 
-    public String getUser() {
-        return User;
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setUser(String user) {
-        User = user;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
     public String getIdName() {

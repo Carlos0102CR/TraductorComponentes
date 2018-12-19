@@ -21,20 +21,17 @@ public class DocumentController {
     @Autowired
     AmazonClient AWSClient;
 
-    @PostMapping
+   /* @PostMapping
     @ResponseBody
     public String uploadFile(@RequestPart(value = "file") MultipartFile file) {
         return this.AWSClient.uploadFile(file);
-    }
+    }*/
 
     @GetMapping("/{id}")
-    public String uploadDocument(@PathVariable Long id, @RequestParam("file") MultipartFile file,
-                                 RedirectAttributes redirectAttributes, Model model) {
-        Document document = new Document();
+    public String listDocuments(@PathVariable Long id,Model model) {
 
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded !");
+        model.addAttribute("documents",repo.findAllByIdUser(id));
 
-        return "documentSuccess";
+        return "documents";
     }
 }
