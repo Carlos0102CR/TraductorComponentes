@@ -23,9 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +64,7 @@ public class AmazonClient {
                 .build();
     }
 
-    private Language dominantLanguage(String text,Language source) {
+    private Language dominantLanguage(String text, Language source) {
         DetectDominantLanguageRequest request = new DetectDominantLanguageRequest().withText(text);
         DetectDominantLanguageResult result = comprehendClient.detectDominantLanguage(request);
         List<DominantLanguage> languages;
@@ -81,17 +79,21 @@ public class AmazonClient {
     public Translate translate(Translate trans) {
         TranslateTextResult result;
         if (trans.getSourceLanguage().getLangCode().equals("auto")) {
-            trans.setSourceLanguage(dominantLanguage(trans.getText(),trans.getSourceLanguage()));
+            trans.setSourceLanguage(dominantLanguage(trans.getText(), trans.getSourceLanguage()));
         }
         result = translateClient.translateText(trans.getRequest());
         trans.setTranslatedText(result.getTranslatedText());
 
         return trans;
     }
-    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+
+    private File convertMultiPartToFile(MultipartFile file, Translate trans) throws IOException {
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
+        trans.setText(new String(file.getBytes()));
+
+        trans = translate(trans);
+        fos.write(trans.getTranslatedText().getBytes());
         fos.close();
         return convFile;
     }
@@ -105,11 +107,11 @@ public class AmazonClient {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
-    public String uploadFile(MultipartFile multipartFile) {
+    public String uploadFile(MultipartFile multipartFile, Translate translate) {
 
         String fileUrl = "";
         try {
-            File file = convertMultiPartToFile(multipartFile);
+            File file = convertMultiPartToFile(multipartFile, translate);
             String fileName = generateFileName(multipartFile);
             fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
             uploadFileTos3bucket(fileName, file);
