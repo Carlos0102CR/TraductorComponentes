@@ -25,7 +25,7 @@ public class TranslateController {
     @PostMapping
     public String submitTranslation(@ModelAttribute("translate") Translate translate,Model model) {
         AWSClient = new AmazonClient();
-//        model.addAttribute("translate",AWSClient.translate(translate));
+        model.addAttribute("translate",AWSClient.translate(translate));
         return "index";
     }
 }
