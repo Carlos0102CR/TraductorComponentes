@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 public class TranslateController {
 
-    @Autowired
-    AmazonClient AWSClient;
+    AmazonClient AWSClient = new AmazonClient();
 
     @GetMapping
     public String formTranslation(Model model) {

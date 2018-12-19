@@ -27,7 +27,6 @@ import java.io.*;
 import java.util.Date;
 import java.util.List;
 
-@Component
 public class AmazonClient {
     //
 //    private AmazonS3 s3client;
