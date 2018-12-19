@@ -26,19 +26,19 @@ public class DocumentController {
     @Autowired
     UserRepository usRepo;
 
-//    @Autowired
-//    AmazonClient AWSClient;
+    AmazonClient AWSClient;
 
     @PostMapping("/{id}")
     public String uploadFile(@PathVariable Long id,@RequestPart(value = "file") MultipartFile file,@ModelAttribute("translate") Translate translate) {
         Document document = new Document();
+        AWSClient = new AmazonClient();
 
         document.setIdName(file.getOriginalFilename());
         document.setTitle(file.getOriginalFilename());
         document.setCreated(LocalDate.now());
         document.setIdUser(id);
-//        translate.setSourceLanguage(Language.Auto);
-//        document.setUrl(this.AWSClient.uploadFile(file,translate));
+        translate.setSourceLanguage(Language.Auto);
+        document.setUrl(this.AWSClient.uploadFile(file,translate));
         repo.save(document);
 
         return "documents";

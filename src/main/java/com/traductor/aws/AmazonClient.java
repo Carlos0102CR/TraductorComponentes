@@ -28,28 +28,17 @@ import java.util.Date;
 import java.util.List;
 
 public class AmazonClient {
-    //
-//    private AmazonS3 s3client;
+
+    private AmazonS3 s3client;
     private AmazonTranslate translateClient;
     private AmazonComprehend comprehendClient;
     private String region = "us-east-2";
-    //
-//    @Value("${amazonProperties.endpointUrl}")
-//    private String endpointUrl;
-//    @Value("${amazonProperties.bucketName}")
-//    private String bucketName;
-    private String accessKey ="AKIAJQGGAOV5ESWA66PA";
+
+    private String endpointUrl = "https://s3.us-east-2.amazonaws.com";
+    private String bucketName = "traductor-documents-bucket";
+    private String accessKey = "AKIAJQGGAOV5ESWA66PA";
     private String secretKey = "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";
 
-    //
-    @PostConstruct
-    private void initializeAmazon() {
-//        this.s3client = AmazonS3ClientBuilder
-//                .standard()
-//                .withRegion(region)
-//                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//                .build();
-    }
 
     private Language dominantLanguage(String text, Language source) {
         initComprehendClient();
@@ -96,46 +85,52 @@ public class AmazonClient {
                 .withCredentials(cred)
                 .build();
     }
-//
-//    private File convertMultiPartToFile(MultipartFile file, Translate trans) throws IOException {
-//        File convFile = new File(file.getOriginalFilename());
-//        FileOutputStream fos = new FileOutputStream(convFile);
-//        trans.setText(new String(file.getBytes()));
-//
-//        trans = translate(trans);
-//        fos.write(trans.getTranslatedText().getBytes());
-//        fos.close();
-//        return convFile;
-//    }
-//
-//    private String generateFileName(MultipartFile multiPart) {
-//        return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
-//    }
-//
-//    private void uploadFileTos3bucket(String fileName, File file) {
-//        s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
-//                .withCannedAcl(CannedAccessControlList.PublicRead));
-//    }
-//
-//    public String uploadFile(MultipartFile multipartFile, Translate translate) {
-//
-//        String fileUrl = "";
-//        try {
-//            File file = convertMultiPartToFile(multipartFile, translate);
-//            String fileName = generateFileName(multipartFile);
-//            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
-//            uploadFileTos3bucket(fileName, file);
-//            file.delete();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return fileUrl;
-//    }
-//
-//    public String deleteFileFromS3Bucket(String fileUrl) {
-//        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-//        s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
-//        return "Successfully deleted";
-//    }
+
+    private File convertMultiPartToFile(MultipartFile file, Translate trans) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        trans.setText(new String(file.getBytes()));
+
+        trans = translate(trans);
+        fos.write(trans.getTranslatedText().getBytes());
+        fos.close();
+        return convFile;
+    }
+
+    private String generateFileName(MultipartFile multiPart) {
+        return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+    }
+
+    private void uploadFileTos3bucket(String fileName, File file) {
+        s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+    }
+
+    public String uploadFile(MultipartFile multipartFile, Translate translate) {
+        initS3();
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile, translate);
+            String fileName = generateFileName(multipartFile);
+            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileUrl;
+    }
+
+    private void initS3() {
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+        AWSStaticCredentialsProvider cred = new AWSStaticCredentialsProvider(credentials);
+        this.s3client = AmazonS3ClientBuilder
+                .standard()
+                .withRegion(region)
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .build();
+
+    }
 }
 
