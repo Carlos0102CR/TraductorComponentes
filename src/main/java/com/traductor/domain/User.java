@@ -3,7 +3,7 @@ package com.traductor.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "/users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +16,7 @@ public class User {
     @Column(name="mail")
     private String mail;
 
-    @Column(name="password")
+    @Column(name="password_field")
     private String password;
 
     public User(){
