@@ -63,7 +63,7 @@
         <tbody>
         <tr th:each="document : ${documents}" th:object="${document}">
             <th th:text="${document.title}"></th>
-            <td th:text="${document.url}"></td>
+            <td ><a th:href="${document.url}" download="${document.title}">Descargar</a></td>
             <td th:text="${document.created}"></td>
         </tr>
         </tbody>
