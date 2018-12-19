@@ -38,34 +38,21 @@ public class AmazonClient {
 //    private String endpointUrl;
 //    @Value("${amazonProperties.bucketName}")
 //    private String bucketName;
-    @Value("${amazonProperties.accessKey}")
-    private String accessKey;
-    @Value("${amazonProperties.secretKey}")
-    private String secretKey;
+    private String accessKey ="AKIAJQGGAOV5ESWA66PA";
+    private String secretKey = "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";
 
     //
     @PostConstruct
     private void initializeAmazon() {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-//
-        AWSStaticCredentialsProvider cred = new AWSStaticCredentialsProvider(credentials);
-        this.translateClient = AmazonTranslateClientBuilder
-                .standard()
-                .withRegion(region)
-                .withCredentials(cred)
-                .build();
 //        this.s3client = AmazonS3ClientBuilder
 //                .standard()
 //                .withRegion(region)
 //                .withCredentials(new AWSStaticCredentialsProvider(credentials))
 //                .build();
-        this.comprehendClient = AmazonComprehendClientBuilder.standard()
-                .withCredentials(cred)
-                .withRegion(region)
-                .build();
     }
 
     private Language dominantLanguage(String text, Language source) {
+        initComprehendClient();
         DetectDominantLanguageRequest request = new DetectDominantLanguageRequest().withText(text);
         DetectDominantLanguageResult result = comprehendClient.detectDominantLanguage(request);
         List<DominantLanguage> languages;
@@ -77,7 +64,18 @@ public class AmazonClient {
         return source;
     }
 
+    private void initComprehendClient() {
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+        AWSStaticCredentialsProvider cred = new AWSStaticCredentialsProvider(credentials);
+        this.comprehendClient = AmazonComprehendClientBuilder.standard()
+                .withCredentials(cred)
+                .withRegion(region)
+                .build();
+    }
+
     public Translate translate(Translate trans) {
+        initTranslateClient();
         TranslateTextResult result;
         if (trans.getSourceLanguage().getLangCode().equals("auto")) {
             trans.setSourceLanguage(dominantLanguage(trans.getText(), trans.getSourceLanguage()));
@@ -86,6 +84,17 @@ public class AmazonClient {
         trans.setTranslatedText(result.getTranslatedText());
 
         return trans;
+    }
+
+    private void initTranslateClient() {
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+        AWSStaticCredentialsProvider cred = new AWSStaticCredentialsProvider(credentials);
+        this.translateClient = AmazonTranslateClientBuilder
+                .standard()
+                .withRegion(region)
+                .withCredentials(cred)
+                .build();
     }
 //
 //    private File convertMultiPartToFile(MultipartFile file, Translate trans) throws IOException {
