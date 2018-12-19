@@ -2,15 +2,17 @@ package com.traductor.domain;
 
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "documents")
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="id_document")
+    private Long idDocument;
 
-    @Column(name="id_user")
+    @Column(name = "id_user")
     private Long idUser;
 
     @Column(name="id_name")
@@ -22,25 +24,25 @@ public class Document {
     @Column(name="url")
     private String url;
 
-    @Column(name="crated_date")
-    private String created;
+    @Column(name="created_date")
+    private Date created;
     public Document() {
     }
 
-    public Document(Long idUser, String idName, String title, String url, String created) {
+    public Document(Long idUser, String idName, String title, String url, Date created) {
         this.idUser = idUser;
         this.idName = idName;
         this.title = title;
         this.url = url;
-        this.created = created;
+        this.created = new Date();
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdDocument() {
+        return idDocument;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdDocument(Long idDocument) {
+        this.idDocument = idDocument;
     }
 
     public Long getIdUser() {
@@ -75,11 +77,11 @@ public class Document {
         this.url = url;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 }

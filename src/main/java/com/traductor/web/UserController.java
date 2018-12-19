@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequestMapping("/user")
 @Controller
@@ -27,6 +29,13 @@ public class UserController {
 		repo.save(user);
 		return "redirect:/";
 	}
+
+    @GetMapping("/listar")
+    @ResponseBody
+    public List<User> listar() {
+
+        return repo.findAll();
+    }
 	
 	@GetMapping("/login")
 	public String saveUserLogin(Model model) {
@@ -36,13 +45,13 @@ public class UserController {
 	}
     
     @PostMapping("/login")
-	public String userLogin(Model model, @ModelAttribute("login") User user) {
+	public String userLogin(@ModelAttribute("login") User user) {
 
 		User us = repo.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 
 		if (us != null) {
 
-			return "documents/"+us.getId();
+			return "documents/"+us.getIdUser();
 		}
 
 		return "login";
