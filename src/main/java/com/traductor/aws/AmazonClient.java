@@ -10,6 +10,9 @@ import com.amazonaws.services.comprehend.model.DetectDominantLanguageResult;
 import com.amazonaws.services.comprehend.model.DominantLanguage;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.translate.AmazonTranslate;
 import com.amazonaws.services.translate.AmazonTranslateClientBuilder;
 import com.amazonaws.services.translate.model.TranslateTextResult;
@@ -17,8 +20,13 @@ import com.traductor.domain.Language;
 import com.traductor.domain.Translate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -27,6 +35,7 @@ public class AmazonClient {
     private AmazonS3 s3client;
     private AmazonTranslate translateClient;
     private AmazonComprehend comprehendClient;
+    private String region = "us-east-2";
 
     @Value("${amazonProperties.endpointUrl}")
     private String endpointUrl;
@@ -43,17 +52,17 @@ public class AmazonClient {
 
         this.translateClient = AmazonTranslateClientBuilder
                 .standard()
-                .withRegion("us-east-1")
+                .withRegion(region)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
         this.s3client = AmazonS3ClientBuilder
                 .standard()
-                .withRegion("us-east-1")
+                .withRegion(region)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
         this.comprehendClient = AmazonComprehendClientBuilder.standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion("us-east-1")
+                .withRegion(region)
                 .build();
     }
 
@@ -78,6 +87,43 @@ public class AmazonClient {
         trans.setTranslatedText(result.getTranslatedText());
 
         return trans;
+    }
+    private File convertMultiPartToFile(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
+    }
+
+    private String generateFileName(MultipartFile multiPart) {
+        return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+    }
+
+    private void uploadFileTos3bucket(String fileName, File file) {
+        s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+    }
+
+    public String uploadFile(MultipartFile multipartFile) {
+
+        String fileUrl = "";
+        try {
+            File file = convertMultiPartToFile(multipartFile);
+            String fileName = generateFileName(multipartFile);
+            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileUrl;
+    }
+
+    public String deleteFileFromS3Bucket(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
+        return "Successfully deleted";
     }
 }
 

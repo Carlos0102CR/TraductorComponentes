@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
-@RequestMapping("/users/")
+@RequestMapping("/user")
 @Controller
 public class UserController {
 
