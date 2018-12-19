@@ -6,10 +6,8 @@ import com.traductor.domain.Document;
 import com.traductor.domain.Language;
 import com.traductor.domain.Translate;
 import com.traductor.domain.User;
-import com.traductor.domain.User;
 import com.traductor.repository.DocumentRepository;
 import com.traductor.repository.UserRepository;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Date;
 
 @RequestMapping("/document")
 @Controller
@@ -30,8 +26,8 @@ public class DocumentController {
     @Autowired
     UserRepository usRepo;
 
-    @Autowired
-    AmazonClient AWSClient;
+//    @Autowired
+//    AmazonClient AWSClient;
 
     @PostMapping("/{id}")
     public String uploadFile(@PathVariable Long id,@RequestPart(value = "file") MultipartFile file,@ModelAttribute("translate") Translate translate) {
@@ -41,8 +37,8 @@ public class DocumentController {
         document.setTitle(file.getOriginalFilename());
         document.setCreated(LocalDate.now());
         document.setIdUser(id);
-        translate.setSourceLanguage(Language.Auto);
-        document.setUrl(this.AWSClient.uploadFile(file,translate));
+//        translate.setSourceLanguage(Language.Auto);
+//        document.setUrl(this.AWSClient.uploadFile(file,translate));
         repo.save(document);
 
         return "documents";
