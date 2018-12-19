@@ -1,62 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dic-tio-nary</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<meta charset="UTF-8">
+<title>Dic-tio-nary</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark text-white">
-    <a class="navbar-brand">Dic-tio-nary</a>
-    <form class="form-inline">
-        <a class="mr-3 text-white" href="/"><strong>TRADUCTOR</strong></a>
-    </form>
-</nav>
-<div class="container">
-    <div class="row md-12">
-        <div class="col-md-12">
-            <form method="post" action="#" id="#">
-                <div class="form-group files">
-                   <h3>Traducir un documento</h3>
-                    <input type="file" class="form-control" multiple="" accept="application/pdf">
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="row md-12">
-        <div class="col-md-12">
-            <h2
-                    style="margin: 0.0px 0.0px 16.1px 0.0px; line-height: 28.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000">
-                <span class="s1"><b>Fincas</b></span>
-            </h2>
-
-            <table class="table">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-
-                <th:block th:each="finca: ${fincaLista}" th:object="${finca}">
-                    <tr>
-                        <td th:text="${finca.id}"></td>
-                        <td th:text="${finca.nombre}"></td>
-                        <td></td>
-                        <td><form th:object="${finca}"
-                                  th:action="@{'/cafe/'+${finca.id}}">
-                            <button type="submit">Registrar Cafe</button>
-                        </form></td>
-                        <td><form th:object="${finca}"
-                                  th:action="@{'/cafeListar/'+${finca.id}}">
-                            <input type="submit" value="Listar Cafes" />
-                        </form></td>
-                    </tr>
-                </th:block>
-            </table>
-        </div>
-    </div>
-</div>
+	<nav class="navbar navbar-dark bg-dark text-white">
+		<a class="navbar-brand">Dic-tio-nary</a>
+		<form class="form-inline">
+			<a class="mr-3 text-white" href="/"><strong>TRADUCTOR</strong></a>
+		</form>
+	</nav>
+	<div class="container">
+		<div class="row md-12">
+			<div class="col-md-12">
+				<form method="post" action="#" id="#">
+					<div class="form-group files">
+						<h3>Traducir un documento</h3>
+						<input type="file" class="form-control" multiple=""
+							accept="application/pdf">
+					</div>
+				</form>
+			</div>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Título</th>
+					<th scope="col">Url</th>
+					<th scope="col">Fecha de creación</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="document : ${documents}" th:object="${document}">
+					<th th:text="${document.title}"></th>
+					<td th:text="${document.url}"></td>
+					<td th:text="${document.created}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
