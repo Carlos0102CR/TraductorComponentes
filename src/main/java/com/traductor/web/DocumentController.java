@@ -9,6 +9,8 @@ import com.traductor.domain.User;
 import com.traductor.domain.User;
 import com.traductor.repository.DocumentRepository;
 import com.traductor.repository.UserRepository;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class DocumentController {
 
         document.setIdName(file.getOriginalFilename());
         document.setTitle(file.getOriginalFilename());
-        document.setCreated(new Date());
+        document.setCreated(LocalDate.now());
         document.setIdUser(id);
         translate.setSourceLanguage(Language.Auto);
         document.setUrl(this.AWSClient.uploadFile(file,translate));

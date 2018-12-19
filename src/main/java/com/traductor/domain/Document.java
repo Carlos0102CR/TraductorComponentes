@@ -2,7 +2,8 @@ package com.traductor.domain;
 
 
 import javax.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "documents")
@@ -25,16 +26,16 @@ public class Document {
     private String url;
 
     @Column(name="created")
-    private Date created;
+    private LocalDate created;
     public Document() {
     }
 
-    public Document(Long idUser, String idName, String title, String url, Date created) {
+    public Document(Long idUser, String idName, String title, String url, LocalDate created) {
         this.idUser = idUser;
         this.idName = idName;
         this.title = title;
         this.url = url;
-        this.created = new Date();
+        this.created = LocalDate.now();
     }
 
     public Long getIdDocument() {
@@ -77,11 +78,11 @@ public class Document {
         this.url = url;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 }
