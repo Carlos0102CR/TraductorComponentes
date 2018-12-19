@@ -48,10 +48,11 @@ public class AmazonClient {
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 //
+        AWSStaticCredentialsProvider cred = new AWSStaticCredentialsProvider(credentials);
         this.translateClient = AmazonTranslateClientBuilder
                 .standard()
                 .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withCredentials(cred)
                 .build();
 //        this.s3client = AmazonS3ClientBuilder
 //                .standard()
@@ -59,7 +60,7 @@ public class AmazonClient {
 //                .withCredentials(new AWSStaticCredentialsProvider(credentials))
 //                .build();
         this.comprehendClient = AmazonComprehendClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withCredentials(cred)
                 .withRegion(region)
                 .build();
     }
