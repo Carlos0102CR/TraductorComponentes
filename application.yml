@@ -4,4 +4,4 @@ amazonProperties:
   secretKey: ARgxgogr1HlkDVg/cqmhJ2bQG/mOqIItwq2iHXK5
   bucketName: traductor-documents-bucket
 server:
-    port: 8081
+    port: 5000
