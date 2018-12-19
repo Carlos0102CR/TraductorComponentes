@@ -51,7 +51,7 @@ public class UserController {
 
 		if (us != null) {
 
-			return "documents/"+us.getIdUser();
+			return "redirect:/document/"+us.getIdUser();
 		}
 
 		return "login";

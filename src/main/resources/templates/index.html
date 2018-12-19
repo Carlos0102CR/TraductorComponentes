@@ -18,72 +18,75 @@
 </nav>
 <div class="container">
     <h1 class="d-flex justify-content-center mb-5 mt-5">Traduce lo que quieras</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <select class="form-control border-0" id="selectTextoOrigen">
-                    <option selected="" disabled>Traducir de Cualquier Idioma</option>
-                    <option value="auto"> Auto</option>
-                    <option value="ar"> Arabic</option>
-                    <option value="zh"> Chinese</option>
-                    <option value="cs"> Czech</option>
-                    <option value="da"> Danish</option>
-                    <option value="nl"> Dutch</option>
-                    <option value="en"> English</option>
-                    <option value="fi"> Finnish</option>
-                    <option value="fr"> French</option>
-                    <option value="de"> German</option>
-                    <option value="he"> Hebrew</option>
-                    <option value="id"> Indonesian</option>
-                    <option value="it"> Italian</option>
-                    <option value="ja"> Japanese</option>
-                    <option value="ko"> Korean</option>
-                    <option value="pl"> Polish</option>
-                    <option value="pt"> Portuguese</option>
-                    <option value="ru"> Russian</option>
-                    <option value="es"> Spanish</option>
-                    <option value="sv"> Swedish</option>
-                    <option value="tr"> Turkish</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control bg-dark text-white p-4" placeholder="Type Anything..." id="textoOrigen"
+    <form th:object="${translate}" th:action="@{/translate}" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select th:field="*{sourceLanguage}" class="form-control border-0" id="selectTextoOrigen">
+                        <option selected="" value="" disabled>Traducir de Cualquier Idioma</option>
+                        <option value=0> Auto</option>
+                        <option value=1> Arabic</option>
+                        <option value="zh"> Chinese</option>
+                        <option value="cs"> Czech</option>
+                        <option value="da"> Danish</option>
+                        <option value="nl"> Dutch</option>
+                        <option value="en"> English</option>
+                        <option value="fi"> Finnish</option>
+                        <option value="fr"> French</option>
+                        <option value="de"> German</option>
+                        <option value="he"> Hebrew</option>
+                        <option value="id"> Indonesian</option>
+                        <option value="it"> Italian</option>
+                        <option value="ja"> Japanese</option>
+                        <option value="ko"> Korean</option>
+                        <option value="pl"> Polish</option>
+                        <option value="pt"> Portuguese</option>
+                        <option value="ru"> Russian</option>
+                        <option value="es"> Spanish</option>
+                        <option value="sv"> Swedish</option>
+                        <option value="tr"> Turkish</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                <textarea th:field="*{sourceLanguage}" class="form-control bg-dark text-white p-4" placeholder="Type Anything..." id="textoOrigen"
                           rows="6"></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <select class="form-control border-0" id="selectTextoDestino" onchange="submit">
-                    <option selected disabled>Traducir a...</option>
-                    <option value="ar"> Arabic</option>
-                    <option value="zh"> Chinese</option>
-                    <option value="cs"> Czech</option>
-                    <option value="da"> Danish</option>
-                    <option value="nl"> Dutch</option>
-                    <option value="en"> English</option>
-                    <option value="fi"> Finnish</option>
-                    <option value="fr"> French</option>
-                    <option value="de"> German</option>
-                    <option value="he"> Hebrew</option>
-                    <option value="id"> Indonesian</option>
-                    <option value="it"> Italian</option>
-                    <option value="ja"> Japanese</option>
-                    <option value="ko"> Korean</option>
-                    <option value="pl"> Polish</option>
-                    <option value="pt"> Portuguese</option>
-                    <option value="ru"> Russian</option>
-                    <option value="es"> Spanish</option>
-                    <option value="sv"> Swedish</option>
-                    <option value="tr"> Turkish</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control border-4 border-dark p-4" readonly placeholder="Escribe lo que sea..."
+            <div class="col-md-6">
+                <div class="form-group">
+                    <select th:field="*{targetLanguage}" class="form-control border-0" id="selectTextoDestino" onchange="submit">
+                        <option selected value="" disabled>Traducir a...</option>
+                        <option value="ar"> Arabic</option>
+                        <option value="zh"> Chinese</option>
+                        <option value="cs"> Czech</option>
+                        <option value="da"> Danish</option>
+                        <option value="nl"> Dutch</option>
+                        <option value=6> English</option>
+                        <option value="fi"> Finnish</option>
+                        <option value="fr"> French</option>
+                        <option value="de"> German</option>
+                        <option value="he"> Hebrew</option>
+                        <option value="id"> Indonesian</option>
+                        <option value="it"> Italian</option>
+                        <option value="ja"> Japanese</option>
+                        <option value="ko"> Korean</option>
+                        <option value="pl"> Polish</option>
+                        <option value="pt"> Portuguese</option>
+                        <option value="ru"> Russian</option>
+                        <option value="es"> Spanish</option>
+                        <option value="sv"> Swedish</option>
+                        <option value="tr"> Turkish</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                <textarea th:value="*{translatedText}" class="form-control border-4 border-dark p-4" readonly placeholder="Escribe lo que sea..."
                           id="textoDestino" rows="6"></textarea>
+                </div>
             </div>
         </div>
-    </div>
+        <button type="submit" class="btn btn-outline-dark">Traducir</button>
+    </form>
 </div>
 </body>
 </html>

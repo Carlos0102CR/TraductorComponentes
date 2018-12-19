@@ -24,7 +24,7 @@ public class Document {
     @Column(name="url")
     private String url;
 
-    @Column(name="created_date")
+    @Column(name="created")
     private Date created;
     public Document() {
     }

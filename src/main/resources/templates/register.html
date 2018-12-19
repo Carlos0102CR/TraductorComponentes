@@ -23,17 +23,20 @@
                 <div class="panel-body">
                     <form th:object="${user}" th:action="@{/user/}" method="post">
                         <fieldset>
-                            <div class="form-group">
-                                <input th:field="*{username}" id="username" class="form-control border-dark mt-3"
+                            <div class="form-group  mt-3">
+                                <label>Nombre de Usuario</label>
+                                <input th:field="*{username}" id="username" class="form-control border-dark"
                                        placeholder="Nombre de Usuario" name="username" type="username" autofocus="">
                             </div>
                             <div class="form-group">
-                                <input th:field="*{mail}" id="mail" class="form-control border-dark mt-3"
+                                <label>Correo Electronico</label>
+                                <input th:field="*{mail}" id="mail" class="form-control border-dark "
                                        placeholder="Correo Electronico" name="username" type="email" autofocus="">
                             </div>
                             <div class="form-group">
+                                <label>Contraseña</label>
                                 <input th:field="*{password}" type="password" class="form-control border-dark"
-                                       placeholder="Contraseña" name="password" type="password" value="">
+                                       placeholder="Contraseña" name="password" value="">
                             </div>
                             <button type="submit" class="btn btn-outline-dark my-2 my-sm-0 mr-3">Registrar</button>
                         </fieldset>
