@@ -41,7 +41,7 @@ public class DocumentController {
         document.setUrl(this.AWSClient.uploadFile(file,translate));
         repo.save(document);
 
-        return "documents";
+        return "redirect:/document/"+id;
     }
 
     @GetMapping("/{id}")
